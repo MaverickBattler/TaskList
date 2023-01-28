@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.practice.tasklist.databinding.FragmentTasksBinding
 
@@ -36,6 +37,15 @@ class TasksFragment : Fragment() {
         // Set the layout's lifecycle owner so it can respond to live data updates
         binding.lifecycleOwner = viewLifecycleOwner
 
+        // Add the adapter to the recyclerview
+        val adapter = TaskItemAdapter()
+        binding.tasksRecview.adapter = adapter
+
+        viewModel.tasks.observe(viewLifecycleOwner) {
+            it?.let {
+                adapter.data = it
+            }
+        }
         return view
     }
 
