@@ -2,7 +2,9 @@ package com.practice.tasklist
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.CheckBox
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 
 class TaskItemAdapter : RecyclerView.Adapter<TaskItemAdapter.TaskItemViewHolder>() {
@@ -22,20 +24,23 @@ class TaskItemAdapter : RecyclerView.Adapter<TaskItemAdapter.TaskItemViewHolder>
         holder.bind(item)
     }
 
-    class TaskItemViewHolder(private val rootView: TextView) : RecyclerView.ViewHolder(rootView) {
+    class TaskItemViewHolder(rootView: CardView) : RecyclerView.ViewHolder(rootView) {
+        private val taskNameTextview: TextView = rootView.findViewById(R.id.task_name_textview)
+        private val taskDoneCheckbox: CheckBox = rootView.findViewById(R.id.task_done_checkbox)
         companion object {
             fun inflateFrom(parent: ViewGroup): TaskItemViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
                 val view = layoutInflater.inflate(
                     R.layout.task_item,
                     parent, false
-                ) as TextView
+                ) as CardView
                 return TaskItemViewHolder(view)
             }
         }
 
         fun bind(item: Task) {
-            rootView.text = item.name
+            taskNameTextview.text = item.name
+            taskDoneCheckbox.isChecked = item.isDone
         }
     }
 }
